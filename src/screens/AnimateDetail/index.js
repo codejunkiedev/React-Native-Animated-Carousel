@@ -16,6 +16,7 @@ import {
 import { NavigationContainer, NavigationHelpersContext } from '@react-navigation/native';
 import 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable'
+import { SharedElement } from 'react-navigation-shared-element';
 
 const { width, height } = Dimensions.get('window');
 const letterSpacing = {
@@ -23,12 +24,12 @@ const letterSpacing = {
     1: { opacity: 1, translateY: 0 }
 }
 const detailAnimations = {
-    0: { translateX: width, opacity: 0 },
-    1: { translateX: 0, opacity: 1 }
+    0: { translateX: width },
+    1: { translateX: 0 }
 }
 const duration = 300;
 
-export default function AnimateDetail({ navigation, route }) {
+const AnimateDetail = ({ navigation, route }) => {
     const circleSize = Math.sqrt(Math.pow(height, 3) + Math.pow(width, 3));
     const { item } = route.params;
     return (
@@ -62,7 +63,7 @@ export default function AnimateDetail({ navigation, route }) {
                 </Text>
                 </TouchableOpacity>
             </View>
-            <View
+            <SharedElement id={`item.${item.key}.circle`}
                 style={[
                     StyleSheet.absoluteFillObject, {
                         alignItems: 'center',
@@ -80,11 +81,13 @@ export default function AnimateDetail({ navigation, route }) {
                         backgroundColor: item.backgroundColor,
                     }}
                 />
-            </View>
-            <Image
-                source={item.imageUri}
-                style={styles.image}
-            />
+            </SharedElement>
+            <SharedElement id={`item.${item.key}.image`} style={styles.circle}>
+                <Image
+                    source={item.imageUri}
+                    style={styles.image}
+                />
+            </SharedElement>
             <View style={{ flexDirection: 'row', overflow: 'hidden' }}>
                 {item.type.split('').map((letter, index) => {
                     return (
@@ -102,11 +105,8 @@ export default function AnimateDetail({ navigation, route }) {
                     )
                 })}
             </View>
-            <View style={{ flex: 1, flexDirection: 'row', marginTop: height / 2, overflow: 'hidden', }}>
-                <Animatable.View
-                    animation={detailAnimations}
-                    delay={duration + 100}
-                    useNativeDriver
+            <View style={{ flex: 1, flexDirection: 'row', marginTop: height / 2, }}>
+                <View
                     style={{
                         flex: .35,
                         marginBottom: 20,
@@ -115,23 +115,31 @@ export default function AnimateDetail({ navigation, route }) {
                         marginRight: 10
                     }}
                 >
-                    <Animated.Text
+                    <Animatable.View
+                        animation={detailAnimations}
+                        delay={duration + 100}
+                        useNativeDriver
                         style={{
-                            fontWeight: 'bold',
-                            textTransform: 'uppercase',
-                            fontSize: 20,
-                            color: '#000',
-                            padding: 10,
-                            zIndex: 9
+                            overflow: 'hidden',
                         }}
                     >
-                        {item.detailText}
-                    </Animated.Text>
-                </Animatable.View>
-                <Animatable.View
+                        <Animated.Text
+                            style={{
+                                fontWeight: 'bold',
+                                textTransform: 'uppercase',
+                                fontSize: 20,
+                                color: '#000',
+                                padding: 10,
+                                zIndex: 9
+                            }}
+                        >
+                            {item.detailText}
+                        </Animated.Text>
+                    </Animatable.View>
+                </View>
+                <View
                     animation={detailAnimations}
                     delay={duration + 200}
-                    useNativeDriver
                     style={{
                         flex: .65,
                         marginBottom: 20,
@@ -139,16 +147,44 @@ export default function AnimateDetail({ navigation, route }) {
                         alignItems: 'center',
                         overflow: 'hidden',
                         justifyContent: 'center',
-                    }}>
-                    <Image
-                        source={item.imageUri}
-                        style={styles.detailImage}
-                    />
-                </Animatable.View>
+                    }}
+                >
+                    <Animatable.View
+                        animation={detailAnimations}
+                        delay={duration + 200}
+                        useNativeDriver
+                        style={{
+                            overflow: 'hidden',
+                        }}
+                    >
+                        <Image
+                            source={item.imageUri}
+                            style={styles.detailImage}
+                        />
+                    </Animatable.View>
+                </View>
             </View>
         </SafeAreaView>
     );
 }
+
+AnimateDetail.sharedElements = route => {
+    const { item } = route.params;
+    return [
+      {
+        id: `item.${item.key}.image`,
+        // animation: 'move',
+        // resize: 'clip'
+      },
+      {
+        id: `item.${item.key}.circle`,
+        // animation: 'fade',
+        // resize: 'clip'
+      },
+    ];
+  };
+
+export default AnimateDetail;
 
 const styles = StyleSheet.create({
     heading: {
