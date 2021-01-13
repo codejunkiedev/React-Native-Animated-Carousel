@@ -8,13 +8,12 @@ import {
     Dimensions,
     FlatList,
     Animated,
-    TouchableOpacity,
     SafeAreaView,
     Platform,
 } from 'react-native';
-// import { SharedElement } from 'react-navigation-shared-element'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import { SharedElement } from 'react-navigation-shared-element';
 
 const data = [
     {
@@ -65,7 +64,7 @@ const CIRCLE_SIZE = width * 0.6;
 const Circle = ({ scrollX }) => {
     return (
         <View style={[StyleSheet.absoluteFillObject, styles.circleContainer]}>
-            {data.map(({ color }, index) => {
+            {data.map((item, index) => {
                 const inputRange = [
                     (index - 0.55) * width,
                     index * width,
@@ -81,19 +80,20 @@ const Circle = ({ scrollX }) => {
                     outputRange: [0, 0.2, 0],
                 });
                 return (
-                    // <SharedElement id={`item.${item.key}.circle`} style={styles.circle}>
+                    <SharedElement id={`item.${item.key}.circle`} style={styles.circle}>
                         <Animated.View
                             key={index}
                             style={[
                                 styles.circle,
                                 {
-                                    backgroundColor: color,
+                                    top: 0,
+                                    backgroundColor: item.backgroundColor,
                                     opacity,
                                     transform: [{ scale }],
                                 },
                             ]}
                         />
-                    // </SharedElement>
+                    </SharedElement>
                 );
             })}
         </View>
@@ -148,8 +148,8 @@ const Item = ({ item, scrollX, index }) => {
     });
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('AnimateDetail', { item })} activeOpacity={.8} style={styles.itemStyle}>
-            {/* <SharedElement id={`item.${item.key}.image`} style={styles.imageStyle}> */}
+        <TouchableOpacity onPress={() => navigation.push('AnimateDetail', { item })} activeOpacity={.8} style={styles.itemStyle}>
+            <SharedElement id={`item.${item.key}.image`} style={styles.imageStyle}>
                 <Animated.Image
                     source={imageUri}
                     style={[
@@ -159,7 +159,7 @@ const Item = ({ item, scrollX, index }) => {
                         },
                     ]}
                 />
-            {/* </SharedElement> */}
+            </SharedElement>
             <View style={styles.textContainer}>
                 <Animated.Text
                     style={[
