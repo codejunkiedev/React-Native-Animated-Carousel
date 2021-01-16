@@ -17,39 +17,42 @@ import { SharedElement } from 'react-navigation-shared-element';
 
 const data = [
     {
-        type: 'Recipes',
+        type: 'Pink',
         key: 'first',
-        imageUri: require('../../../assets/images/apple.png'),
-        heading: 'Quick & Easy',
-        description: 'Say bye to the stressful meal-prep nights with quick & easy recipes.',
+        imageUri: require('../../../assets/images/airpods-max-select-pink.png'),
+        heading: 'Sounds like an epiphany',
+        description: 'Beamforming microphones help isolate your voice on phone calls, so it’s heard clearly — even in windy situations.',
         color: '#eb8899',
         backgroundColor: '#eb8899',
         detailBackgroundColor: 'rgba(235, 136, 153, 0.5)',
-        detailText: 'Text of Recipes',
+        detailText: 'Immersive listening',
+          detailDescription:'AirPods Max combine high-fidelity audio with industry-leading Active Noise Cancellation to deliver an unparalleled listening experience. Each part of their custom-built driver works to produce sound with ultra-low distortion across the audible range. From deep, rich bass to accurate mids and crisp, clean highs, you’ll hear every note with a new sense of clarity.',
         detailImage: '',
     },
     {
-        type: 'Chefs',
+        type: 'Sky Blue',
         key: 'second',
-        imageUri: require('../../../assets/images/grape.png'),
-        heading: 'Get Chef Recommendation',
-        description: 'Find recipes shared by chefs from across the world.',
-        color: '#b88fbc',
-        backgroundColor: '#b88fbc',
-        detailBackgroundColor: 'rgba(184, 143, 188, 0.5)',
-        detailText: 'Text of Chefs',
+        imageUri: require('../../../assets/images/airpods-max-select-skyblue.png'),
+        heading: 'Elaborately Simple',
+        description: 'AirPods Max inherit all of the wireless, effortless magic of the AirPods family.',
+        color: '#2D4B67',
+        backgroundColor: '#2D4B67',
+        detailBackgroundColor: 'rgba(45, 75, 103, 0.5)',
+        detailText: 'One-tap setup',
+        detailDescription:'AirPods Max inherit all of the wireless, effortless magic of the AirPods family. From setup to Siri commands, they make the listening experience completely fluid — day to day, device to device.',
         detailImage: '',
     },
     {
-        type: 'Dishes',
+        type: 'Green',
         key: 'third',
-        imageUri: require('../../../assets/images/watermelon.png'),
-        heading: 'Customize Your Dish',
-        description: 'Customize your dish by using the ingredients that are in your kitchen.',
+        imageUri: require('../../../assets/images/airpods-max-select-green.png'),
+        heading: 'More magic to play with',
+        description: 'AirPods Max pause audio when you take them off, and resume playback when you put them back on.',
         color: '#9dcc96',
         backgroundColor: '#9dcc96',
         detailBackgroundColor: 'rgba(157, 204, 150, 0.5)',
-        detailText: 'Text of Dishes',
+        detailText: 'Always-on Siri',
+          detailDescription:'Get directions, check the weather, schedule a meeting, and more with a simple “Hey Siri.” With an expansive set of commands, your favorite personal assistant is more helpful than ever.',
         detailImage: '',
     },
 ];
@@ -59,7 +62,7 @@ const LOGO_WIDTH = 220;
 const LOGO_HEIGHT = 40;
 const DOT_SIZE = 40;
 const TICKER_HEIGHT = 40;
-const CIRCLE_SIZE = width * 0.6;
+const CIRCLE_SIZE = width * 0.7;
 
 const Circle = ({ scrollX }) => {
     return (
@@ -228,7 +231,7 @@ export default function Animate({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <StatusBar style='auto' hidden />
+            <StatusBar style='auto'  />
             <Circle scrollX={scrollX} />
             <Animated.FlatList
                 keyExtractor={(item) => item.key}
@@ -247,7 +250,7 @@ export default function Animate({ navigation }) {
             />
             <Image
                 style={styles.logo}
-                source={require('../../../assets/codejunkie.png')}
+                source={require('../../../assets/images/black_logo.png')}
             />
             <Pagination scrollX={scrollX} />
             <Ticker scrollX={scrollX} />
@@ -267,8 +270,9 @@ const styles = StyleSheet.create({
     },
     imageStyle: {
         marginBottom: Platform.OS == 'ios' ? 50 : 0,
-        width: width / 2.5,
-        height: width / 2.5,
+        marginTop:50,
+        width: width -100 ,
+        height: width -100,
         resizeMode: 'contain',
         flex: 1,
     },
@@ -280,20 +284,20 @@ const styles = StyleSheet.create({
     heading: {
         color: '#444',
         textTransform: 'uppercase',
-        fontSize: 20,
+        fontSize: 26,
         fontWeight: '800',
         width: width * 0.75,
-        letterSpacing: 2,
+        letterSpacing: 0,
         marginBottom: 5,
     },
     description: {
-        color: '#ccc',
-        fontWeight: '600',
+        color: '#b7b7b7',
+        fontWeight: 'normal',
         textAlign: 'left',
         width: width * 0.75,
         marginRight: 10,
         fontSize: 16,
-        lineHeight: 16 * 1.5,
+        lineHeight: 17,
     },
     logo: {
         opacity: 0.9,
@@ -337,7 +341,7 @@ const styles = StyleSheet.create({
     },
     tickerContainer: {
         position: 'absolute',
-        top: 40,
+        top: 50,
         left: 20,
         overflow: 'hidden',
         height: TICKER_HEIGHT,
@@ -358,6 +362,6 @@ const styles = StyleSheet.create({
         height: CIRCLE_SIZE,
         borderRadius: CIRCLE_SIZE / 2,
         position: 'absolute',
-        top: '15%',
+        top: '18%',
     },
 });

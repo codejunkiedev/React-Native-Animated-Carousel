@@ -40,11 +40,13 @@ const AnimateDetail = ({ navigation, route }) => {
                     position: 'absolute',
                     top: 5,
                     right: 0,
+                      zIndex: 99,
                 }}
             >
                 <TouchableOpacity
                     style={{
                         padding: 5,
+                        marginTop:30,
                         zIndex: 99,
                     }}
                     activeOpacity={1}
@@ -127,7 +129,7 @@ const AnimateDetail = ({ navigation, route }) => {
                             style={{
                                 fontWeight: 'bold',
                                 textTransform: 'uppercase',
-                                fontSize: 20,
+                                fontSize: 18,
                                 color: '#000',
                                 padding: 10,
                                 zIndex: 9
@@ -157,10 +159,8 @@ const AnimateDetail = ({ navigation, route }) => {
                             overflow: 'hidden',
                         }}
                     >
-                        <Image
-                            source={item.imageUri}
-                            style={styles.detailImage}
-                        />
+                    <Text style={[styles.description]}>{item.detailDescription}</Text>
+
                     </Animatable.View>
                 </View>
             </View>
@@ -210,5 +210,12 @@ const styles = StyleSheet.create({
         height: width * 0.4,
         resizeMode: 'contain',
         // position: 'absolute'
+    },
+    description: {
+        fontWeight: 'normal',
+        textAlign: 'left',
+        fontSize: 14,
+        lineHeight: 15,
+        padding: 10,
     }
 });
